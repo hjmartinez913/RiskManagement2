@@ -1,0 +1,136 @@
+
+CREATE TABLE riskmanagement_Risks (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
+  title NVARCHAR(100),
+  owner NVARCHAR(255),
+  prio_code NVARCHAR(255),
+  descr NVARCHAR(255),
+  miti_ID NVARCHAR(36),
+  impact INTEGER,
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE riskmanagement_Mitigations (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
+  descr NVARCHAR(255),
+  owner NVARCHAR(255),
+  timeline NVARCHAR(255),
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE riskmanagement_Priority (
+  name NVARCHAR(255),
+  descr NVARCHAR(1000),
+  code NVARCHAR(255) NOT NULL,
+  PRIMARY KEY(code)
+);
+
+CREATE TABLE riskmanagement_Priority_texts (
+  locale NVARCHAR(14) NOT NULL,
+  name NVARCHAR(255),
+  descr NVARCHAR(1000),
+  code NVARCHAR(255) NOT NULL,
+  PRIMARY KEY(locale, code)
+);
+
+CREATE VIEW localized_riskmanagement_Priority AS SELECT
+  coalesce(localized_1.name, L_0.name) AS name,
+  coalesce(localized_1.descr, L_0.descr) AS descr,
+  L_0.code
+FROM (riskmanagement_Priority AS L_0 LEFT JOIN riskmanagement_Priority_texts AS localized_1 ON localized_1.code = L_0.code AND localized_1.locale = 'en');
+
+CREATE VIEW localized_riskmanagement_Risks AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.title,
+  L.owner,
+  L.prio_code,
+  L.descr,
+  L.miti_ID,
+  L.impact
+FROM riskmanagement_Risks AS L;
+
+CREATE VIEW localized_riskmanagement_Mitigations AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.descr,
+  L.owner,
+  L.timeline
+FROM riskmanagement_Mitigations AS L;
+
+CREATE VIEW localized_de_riskmanagement_Priority AS SELECT
+  coalesce(localized_de_1.name, L_0.name) AS name,
+  coalesce(localized_de_1.descr, L_0.descr) AS descr,
+  L_0.code
+FROM (riskmanagement_Priority AS L_0 LEFT JOIN riskmanagement_Priority_texts AS localized_de_1 ON localized_de_1.code = L_0.code AND localized_de_1.locale = 'de');
+
+CREATE VIEW localized_fr_riskmanagement_Priority AS SELECT
+  coalesce(localized_fr_1.name, L_0.name) AS name,
+  coalesce(localized_fr_1.descr, L_0.descr) AS descr,
+  L_0.code
+FROM (riskmanagement_Priority AS L_0 LEFT JOIN riskmanagement_Priority_texts AS localized_fr_1 ON localized_fr_1.code = L_0.code AND localized_fr_1.locale = 'fr');
+
+CREATE VIEW localized_de_riskmanagement_Risks AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.title,
+  L.owner,
+  L.prio_code,
+  L.descr,
+  L.miti_ID,
+  L.impact
+FROM riskmanagement_Risks AS L;
+
+CREATE VIEW localized_fr_riskmanagement_Risks AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.title,
+  L.owner,
+  L.prio_code,
+  L.descr,
+  L.miti_ID,
+  L.impact
+FROM riskmanagement_Risks AS L;
+
+CREATE VIEW localized_de_riskmanagement_Mitigations AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.descr,
+  L.owner,
+  L.timeline
+FROM riskmanagement_Mitigations AS L;
+
+CREATE VIEW localized_fr_riskmanagement_Mitigations AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.descr,
+  L.owner,
+  L.timeline
+FROM riskmanagement_Mitigations AS L;
+
